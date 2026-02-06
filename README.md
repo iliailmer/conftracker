@@ -2,6 +2,8 @@
 
 A minimal web app to track deadlines for major ML/AI and Python conferences. Zero cost - runs locally or on Render's free tier.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 ## Features
 
 - Clean, minimal UI showing upcoming conference deadlines
@@ -90,3 +92,16 @@ The script will output suggested YAML that you can review and copy into `data/co
 - **Hosting**: $0 (Render free tier)
 - **LLM API**: $0 (runs locally via llama.cpp)
 - **Total**: $0/month
+
+## Contributing
+
+Contributions welcome! To add a conference:
+1. Fork this repo
+2. Edit `data/conferences.yaml`
+3. Submit a pull request
+
+See [SECURITY.md](SECURITY.md) for PR review guidelines.
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details.
