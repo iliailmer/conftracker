@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conference Deadline Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Droid Sans Mono', 'Source Code Pro', monospace;
+            line-height: 1.6;
+            color: #1a1a1a;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #fafafa;
+            letter-spacing: 0.01em;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 32px;
+            color: #000;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        .conference {
+            background: #fff;
+            border-radius: 0;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-left: 3px solid #e0e0e0;
+            border: 1px solid #e8e8e8;
+        }
+
+        .conference.urgent {
+            border-left-color: #dc2626;
+            border-left-width: 4px;
+        }
+
+        .conference.soon {
+            border-left-color: #ea580c;
+            border-left-width: 4px;
+        }
+
+        .conference.upcoming {
+            border-left-color: #16a34a;
+            border-left-width: 4px;
+        }
+
+        .conference-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .conference-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .conference-name a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .conference-name a:hover {
+            text-decoration: underline;
+        }
+
+        .deadline-badge {
+            font-size: 13px;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 0;
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .deadline-badge.urgent {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .deadline-badge.soon {
+            background: #fff7ed;
+            color: #9a3412;
+        }
+
+        .full-name {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .deadlines {
+            font-size: 13px;
+            color: #444;
+        }
+
+        .deadline-item {
+            margin: 4px 0;
+        }
+
+        .deadline-type {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .past {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            padding: 20px 0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        footer code {
+            color: #000;
+            background: #f5f5f5;
+            padding: 2px 6px;
+            font-size: 11px;
+        }
+
+        footer a {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        footer a:hover {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conference Deadline Tracker</h1>
+
+    {% for conf in conferences %}
+    {% set next = conf.next_deadline %}
+    {% if next %}
+        {% if next.days < 0 %}
+            {% set status_class = 'past' %}
+            {% set badge_class = '' %}
+        {% elif next.days <= 7 %}
+            {% set status_class = 'urgent' %}
+            {% set badge_class = 'urgent' %}
+        {% elif next.days <= 30 %}
+            {% set status_class = 'soon' %}
+            {% set badge_class = 'soon' %}
+        {% else %}
+            {% set status_class = 'upcoming' %}
+            {% set badge_class = '' %}
+        {% endif %}
+    {% else %}
+        {% set status_class = '' %}
+        {% set badge_class = '' %}
+    {% endif %}
+
+    <div class="conference {{ status_class }}">
+        <div class="conference-header">
+            <div class="conference-name">
+                <a href="{{ conf.website }}" target="_blank">{{ conf.name }}</a>
+            </div>
+            {% if next %}
+                {% if next.days >= 0 %}
+                <div class="deadline-badge {{ badge_class }}">
+                    {{ next.days }} day{% if next.days != 1 %}s{% endif %}
+                </div>
+                {% else %}
+                <div class="deadline-badge">Passed</div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <div class="full-name">{{ conf.full_name }}</div>
+
+        <div class="deadlines">
+            {% for dl in conf.all_deadlines %}
+            <div class="deadline-item {% if dl.days < 0 %}past{% endif %}">
+                <span class="deadline-type">{{ dl.type }}:</span> {{ dl.date }}
+                {% if dl.days >= 0 %}
+                    ({{ dl.days }} day{% if dl.days != 1 %}s{% endif %})
+                {% else %}
+                    (passed)
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% if conf.conference_date %}
+            <div class="deadline-item" style="margin-top: 8px; color: #666;">
+                Conference: {{ conf.conference_date }}
+                {% if conf.conference_days is not none and conf.conference_days >= 0 %}
+                    ({{ conf.conference_days }} day{% if conf.conference_days != 1 %}s{% endif %})
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <footer>
+        <p>
+            Want to add a conference?
+            <a href="{{ github_repo_url }}/blob/main/data/conferences.yaml" target="_blank">Submit a PR</a>
+            or edit <code>data/conferences.yaml</code>
+        </p>
+        <p style="margin-top: 8px; font-size: 11px;">
+            contributions welcome • deadlines auto-sorted • zero cost tracker
+        </p>
+    </footer>
+</body>
+</html>

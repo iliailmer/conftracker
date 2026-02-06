@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: conference-tracker
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.9
+      # Optional: Set your GitHub repo URL for PR links
+      # Uncomment and update with your actual repo URL:
+      # - key: GITHUB_REPO_URL
+      #   value: https://github.com/YOUR_USERNAME/conference-tracker

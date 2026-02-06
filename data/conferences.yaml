@@ -1,0 +1,59 @@
+conferences:
+  - name: ICLR
+    full_name: "International Conference on Learning Representations"
+    website: "https://iclr.cc"
+    deadlines:
+      abstract: "2025-09-27"
+      paper: "2025-10-01"
+    conference_date: "2026-04-27"
+
+  - name: CVPR
+    full_name: "Conference on Computer Vision and Pattern Recognition"
+    website: "https://cvpr.thecvf.com"
+    deadlines:
+      paper: "2025-11-14"
+    conference_date: "2026-06-16"
+
+  - name: NeurIPS
+    full_name: "Conference on Neural Information Processing Systems"
+    website: "https://neurips.cc"
+    deadlines:
+      abstract: "2025-05-16"
+      paper: "2025-05-23"
+    conference_date: "2025-12-09"
+
+  - name: ICML
+    full_name: "International Conference on Machine Learning"
+    website: "https://icml.cc"
+    deadlines:
+      abstract: "2026-02-05"
+      paper: "2026-02-12"
+    conference_date: "2026-07-13"
+
+  - name: PyCon US
+    full_name: "Python Conference United States"
+    website: "https://us.pycon.org"
+    deadlines:
+      proposal: "2025-12-20"
+    conference_date: "2026-05-13"
+
+  - name: EuroPython
+    full_name: "European Python Conference"
+    website: "https://europython.eu"
+    deadlines:
+      proposal: "2026-03-15"
+    conference_date: "2026-07-13"
+
+  - name: PyData Global
+    full_name: "PyData Global Conference"
+    website: "https://pydata.org"
+    deadlines:
+      proposal: "2025-09-15"
+    conference_date: "2025-12-03"
+
+  - name: ISSAC
+    full_name: "International Symposium on Symbolic and Algebraic Computation"
+    website: "https://www.issac-symposium.org"
+    deadlines:
+      paper: "2025-02-28"
+    conference_date: "2025-07-21"
