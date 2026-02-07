@@ -9,5 +9,5 @@ services:
         value: 3.12.9
       # Optional: Set your GitHub repo URL for PR links
       # Uncomment and update with your actual repo URL:
-      # - key: GITHUB_REPO_URL
-      #   value: https://github.com/YOUR_USERNAME/conference-tracker
+      - key: GITHUB_REPO_URL
+        value: https://github.com/liailmer/conftracker
